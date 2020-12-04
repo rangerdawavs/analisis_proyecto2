@@ -12,12 +12,14 @@ SOURCES += \
     laberinto.cpp \
     main.cpp \
     mainwindow.cpp \
-    nodoarbol.cpp
+    nodoarbol.cpp \
+    renderarea.cpp
 
 HEADERS += \
     laberinto.h \
     mainwindow.h \
-    nodoarbol.h
+    nodoarbol.h \
+    renderarea.h
 
 FORMS += \
     mainwindow.ui

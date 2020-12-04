@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+/*
+https://github.com/rangerdawavs/analisis_proyecto2.git
+ */
+
 
 int main(int argc, char *argv[])
 {
