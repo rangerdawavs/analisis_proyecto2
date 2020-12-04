@@ -17,7 +17,6 @@ public:
     int _corX,
     int _corY,
     int _pointer);
-
 };
 
 #endif // NODOARBOL_H

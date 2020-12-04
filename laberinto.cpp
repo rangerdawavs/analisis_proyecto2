@@ -1,9 +1,14 @@
 #include "laberinto.h"
 #include <QDebug>
+#include <queue>
+#include <time.h>
+
+std::queue <nodoArbol*> buildorder;
+
 laberinto::laberinto()
 {
-    this->height=40;
-    this->width=40;
+    this->height=20;
+    this->width=20;
     for(int i=0;i<width;i++){
         for(int j=0;j<height;j++){
             this->matriz[i][j]=0;
@@ -40,13 +45,51 @@ void laberinto::build(){
 }
 
 void laberinto::build(nodoArbol* nodo){
+    int rnd3=rand()%20;
+    int rnd1=0;
+    if(rnd3==8){
+        rnd1=1;
+    }
+    if(rnd3==9){
+        rnd1=2;
+    }
+    int rnd2;
+    int i=0;
+    int j=1;
+    while(rnd1>=0 && i<50){
+        rnd2=rand()%3;
+        if(rnd2==0 && j%2!=0 && buildforw(nodo)){
+            buildorder.push(nodo->frente);
+            j*=2;
+            rnd1--;
+        }
+        if(rnd2==1 && j%3!=0 && buildLeft(nodo)){
+            buildorder.push(nodo->izq);
+            j*=3;
+            rnd1--;
+        }
+        if(rnd2==2 && j%5!=0 && buildRight(nodo)){
+            buildorder.push(nodo->der);
+            j*=5;
+            rnd1--;
+        }
+        i++;
+    }
+    while(!buildorder.empty()){
+        nodoArbol* cur=buildorder.front();
+        buildorder.pop();
+        build(cur);
+    }
+    /*
+    if(buildforw(nodo)){
+        build(nodo->frente);
+    }
     if(buildLeft(nodo)){
         build(nodo->izq);
-    }else if(buildforw(nodo)){
-        build(nodo->frente);
-    }else if(buildRight(nodo)){
-        build(nodo->der);
     }
+    if(buildRight(nodo)){
+        build(nodo->der);
+    }*/
 }
 
 bool laberinto::buildLeft(nodoArbol* nodo){
