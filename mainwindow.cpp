@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "renderarea.h"
+#include <QDebug>
 
 laberinto* lab= new laberinto();
 
@@ -10,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->renderArea->setLab(lab);
+    lab->build();
 }
 
 MainWindow::~MainWindow()

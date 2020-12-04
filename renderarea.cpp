@@ -72,12 +72,18 @@ void RenderArea::paintEvent(QPaintEvent * /* event */)
     if (antialiased)
         painter.setRenderHint(QPainter::Antialiasing, true);
     if(lab!=nullptr){
-        QRect testRect(0,0,width()/20,height()/20);
-        for(int i=0;i<20;i++){
-            for(int j=0;j<20;j++){
+        int labwidth=lab->width;
+        int labheight=lab->height;
+        QRect testRect(0,0,width()/labwidth,height()/labheight);
+        for(int i=0;i<labwidth;i++){
+            for(int j=0;j<labheight;j++){
                 painter.save();
-                painter.translate(i*width()/20,j*height()/20);
+                painter.translate(i*width()/labwidth,j*height()/labheight);
+                if(this->lab->matriz[i][j]==1){
+                    painter.setPen(palette().light().color());
+                }
                 painter.drawRect(testRect);
+                painter.setPen(palette().dark().color());
                 painter.drawText(testRect,Qt::AlignCenter,
                                  tr(std::to_string(this->lab->matriz[i][j]).c_str()));
                 painter.restore();
