@@ -1,9 +1,12 @@
 #ifndef NODOARBOL_H
 #define NODOARBOL_H
-//added another comment
+#include "laberinto.h"
 
 class nodoArbol
 {
+private:
+    nodoArbol* parent;
+    laberinto* mat;
 public:
     nodoArbol();
 };
