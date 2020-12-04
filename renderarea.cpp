@@ -3,6 +3,35 @@
 #include <QPainter>
 #include <queue>
 #include<cmath>
+
+bool solve(laberinto* lab,nodoArbol* nodo){
+    if(nodo->corX==19 && nodo->corY==19){
+        lab->sol.push(nodo);
+        return true;
+    }
+    else{
+        if(nodo->izq!=nullptr){
+            if(solve(lab,nodo->izq)){
+                lab->sol.push(nodo);
+                return true;
+            }
+        }
+        if(nodo->frente!=nullptr){
+            if(solve(lab,nodo->frente)){
+                lab->sol.push(nodo);
+                return true;
+            }
+        }
+        if(nodo->der!=nullptr){
+            if(solve(lab,nodo->der)){
+                lab->sol.push(nodo);
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 //clase para la zona de dibujo
 RenderArea::RenderArea(QWidget *parent)
     : QWidget(parent)
@@ -81,13 +110,28 @@ void RenderArea::paintEvent(QPaintEvent * /* event */)
                 painter.translate(i*width()/labwidth,j*height()/labheight);
                 if(this->lab->matriz[i][j]==1){
                     painter.setPen(palette().light().color());
-                }
+                    painter.drawRect(testRect);
+                }else{
                 painter.drawRect(testRect);
+                painter.fillRect(testRect,Qt::blue);
+                }
                 painter.setPen(palette().dark().color());
                 painter.drawText(testRect,Qt::AlignCenter,
                                  tr(std::to_string(this->lab->matriz[i][j]).c_str()));
                 painter.restore();
             }
+        }
+        nodoArbol* nodo=lab->getStart();
+        solve(this->lab,nodo);
+        while(!lab->sol.empty()){
+            nodo=lab->sol.front();
+            lab->sol.pop();
+            painter.save();
+            painter.setPen(Qt::red);
+            painter.translate(nodo->corX*width()/labwidth,nodo->corY*height()/labheight);
+            painter.drawRect(testRect);
+            painter.setPen(palette().dark().color());
+            painter.restore();
         }
     }
 

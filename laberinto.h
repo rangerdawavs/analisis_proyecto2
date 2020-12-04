@@ -1,15 +1,19 @@
 #ifndef LABERINTO_H
 #define LABERINTO_H
 #include "nodoarbol.h"
+#include <queue>
+#include <cmath>
+
 
 class laberinto
 {
 private:
     nodoArbol* start;
 public:
+    std::queue <nodoArbol*> sol;
     int height;
     int width;
-    int matriz[40][40];
+    int matriz[20][20];
     laberinto();
     nodoArbol* getStart();
     void build();
