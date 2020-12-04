@@ -15,6 +15,10 @@ RenderArea::RenderArea(QWidget *parent)
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
 }
+void RenderArea::setLab(laberinto* _lab){
+    this->lab=_lab;
+    update();
+}
 
 void RenderArea::setShape(Shape shape)
 {
@@ -61,6 +65,30 @@ void RenderArea::paintEvent(QPaintEvent * /* event */)
     path.moveTo(20, 80);
     path.lineTo(20, 30);
     path.cubicTo(80, 0, 50, 50, 80, 80);
+
+    QPainter painter(this);
+    painter.setPen(pen);
+    painter.setBrush(brush);
+    if (antialiased)
+        painter.setRenderHint(QPainter::Antialiasing, true);
+    if(lab!=nullptr){
+        QRect testRect(0,0,width()/20,height()/20);
+        for(int i=0;i<20;i++){
+            for(int j=0;j<20;j++){
+                painter.save();
+                painter.translate(i*width()/20,j*height()/20);
+                painter.drawRect(testRect);
+                painter.drawText(testRect,Qt::AlignCenter,
+                                 tr(std::to_string(this->lab->matriz[i][j]).c_str()));
+                painter.restore();
+            }
+        }
+    }
+
+    painter.setRenderHint(QPainter::Antialiasing, false);
+    painter.setPen(palette().dark().color());
+    painter.setBrush(Qt::NoBrush);
+    painter.drawRect(QRect(0, 0, width() - 1, height() - 1));
     /*
     static const QPoint points[4] = {
         QPoint(10, 80),

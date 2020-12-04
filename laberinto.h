@@ -5,7 +5,7 @@
 class laberinto
 {
 public:
-    int matriz [20][20];
+    int matriz[20][20];
     nodoArbol* start;
     laberinto();
 };

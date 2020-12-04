@@ -2,6 +2,7 @@
 #define RENDERAREA_H
 #include <QWidget>
 #include <QPen>
+#include "laberinto.h"
 
 /*
  * clase de zona de dibujo, el codigo proviene del tutorial oficial de qt
@@ -17,11 +18,12 @@ public:
     enum Shape { Line, Points, Polyline, Polygon, Rect, RoundedRect, Ellipse, Arc,
                  Chord, Pie, Path, Text, Pixmap };
     explicit RenderArea(QWidget *parent = nullptr);
-
+    laberinto* lab;
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
 
 public slots:
+    void setLab(laberinto* _lab);
     void setShape(Shape shape);
     void setPen(const QPen &pen);
     void setBrush(const QBrush &brush);

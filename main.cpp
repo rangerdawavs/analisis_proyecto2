@@ -2,6 +2,7 @@
 #include "renderarea.h"
 #include <QApplication>
 #include <QWidget>
+//changing code
 /*
 https://github.com/rangerdawavs/analisis_proyecto2.git
  */

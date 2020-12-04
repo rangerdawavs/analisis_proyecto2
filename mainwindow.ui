@@ -23,7 +23,7 @@
      </widget>
     </item>
     <item>
-     <widget class="RenderArea" name="widget" native="true"/>
+     <widget class="RenderArea" name="renderArea" native="true"/>
     </item>
    </layout>
   </widget>
