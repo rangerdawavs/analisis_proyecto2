@@ -4,38 +4,12 @@
 #include <queue>
 #include<cmath>
 
-bool solve(laberinto* lab,nodoArbol* nodo){
-    if(nodo->corX==19 && nodo->corY==19){
-        lab->sol.push(nodo);
-        return true;
-    }
-    else{
-        if(nodo->izq!=nullptr){
-            if(solve(lab,nodo->izq)){
-                lab->sol.push(nodo);
-                return true;
-            }
-        }
-        if(nodo->frente!=nullptr){
-            if(solve(lab,nodo->frente)){
-                lab->sol.push(nodo);
-                return true;
-            }
-        }
-        if(nodo->der!=nullptr){
-            if(solve(lab,nodo->der)){
-                lab->sol.push(nodo);
-                return true;
-            }
-        }
-        return false;
-    }
-}
 
 //clase para la zona de dibujo
 RenderArea::RenderArea(QWidget *parent)
     : QWidget(parent)
 {
+    sol=false;
     shape = Rect;
     antialiased = true;
     transformed = false;
@@ -46,6 +20,10 @@ RenderArea::RenderArea(QWidget *parent)
 }
 void RenderArea::setLab(laberinto* _lab){
     this->lab=_lab;
+    update();
+}
+void RenderArea::setSol(bool _sol){
+    this->sol=_sol;
     update();
 }
 
@@ -121,17 +99,22 @@ void RenderArea::paintEvent(QPaintEvent * /* event */)
                 painter.restore();
             }
         }
-        nodoArbol* nodo=lab->getStart();
-        solve(this->lab,nodo);
-        while(!lab->sol.empty()){
-            nodo=lab->sol.front();
-            lab->sol.pop();
-            painter.save();
-            painter.setPen(Qt::red);
-            painter.translate(nodo->corX*width()/labwidth,nodo->corY*height()/labheight);
-            painter.drawRect(testRect);
-            painter.setPen(palette().dark().color());
-            painter.restore();
+        if(sol){
+            while(!lab->sol.empty()){
+                lab->sol.pop();
+            }
+            nodoArbol* nodo=lab->getStart();
+            lab->solve(nodo);
+            while(!lab->sol.empty()){
+                nodo=lab->sol.front();
+                lab->sol.pop();
+                painter.save();
+                painter.setPen(Qt::red);
+                painter.translate(nodo->corX*width()/labwidth,nodo->corY*height()/labheight);
+                painter.drawRect(testRect);
+                painter.setPen(palette().dark().color());
+                painter.restore();
+            }
         }
     }
 

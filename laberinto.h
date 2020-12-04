@@ -22,6 +22,9 @@ public:
     bool buildRight(nodoArbol* nodo);
     bool buildforw(nodoArbol* nodo);
     bool buildable(int x,int y,int pointer);
+    void res_laberinto();
+    void res_laberinto(nodoArbol* nodo);
+    bool solve(nodoArbol* nodo);
 };
 
 #endif // LABERINTO_H

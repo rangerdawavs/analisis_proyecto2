@@ -110,7 +110,6 @@ bool laberinto::buildLeft(nodoArbol* nodo){
         corX++;
     }
     if(buildable(corX,corY,newDir)){
-        qDebug()<<"adding Node left at ("<<corX<<","<<corY<<")";
         nodoArbol* newNode=new nodoArbol(nodo,nullptr,nullptr,nullptr,corX,corY,newDir);
         nodo->izq=newNode;
         matriz[corX][corY]=1;
@@ -137,7 +136,6 @@ bool laberinto::buildRight(nodoArbol* nodo){
         corX--;
     }
     if(buildable(corX,corY,newDir)){
-        qDebug()<<"adding Node right at ("<<corX<<","<<corY<<")";
         nodoArbol* newNode=new nodoArbol(nodo,nullptr,nullptr,nullptr,corX,corY,newDir);
         nodo->der=newNode;
         matriz[corX][corY]=1;
@@ -164,11 +162,58 @@ bool laberinto::buildforw(nodoArbol * nodo){
         corY++;
     }
     if(buildable(corX,corY,newDir)){
-        qDebug()<<"adding Node forward at ("<<corX<<","<<corY<<")";
         nodoArbol* newNode=new nodoArbol(nodo,nullptr,nullptr,nullptr,corX,corY,newDir);
         nodo->frente=newNode;
         matriz[corX][corY]=1;
         return true;
     }
     return false;
+}
+
+void laberinto::res_laberinto(nodoArbol* nodo){
+    if(nodo->izq!=nullptr){
+        res_laberinto(nodo->izq);
+    }
+    if(nodo->frente!=nullptr){
+        res_laberinto(nodo->frente);
+    }
+    if(nodo->der!=nullptr){
+        res_laberinto(nodo->der);
+    }
+    matriz[nodo->corX][nodo->corY]=0;
+    delete nodo;
+}
+
+void laberinto::res_laberinto(){
+    res_laberinto(getStart());
+    start=new nodoArbol(nullptr,nullptr,nullptr,nullptr,0,0,0);
+    matriz[0][0]=1;
+}
+
+bool laberinto::solve(nodoArbol* nodo){
+    if(nodo->corX==19 && nodo->corY==19){
+        sol.push(nodo);
+        return true;
+    }
+    else{
+        if(nodo->izq!=nullptr){
+            if(solve(nodo->izq)){
+                sol.push(nodo);
+                return true;
+            }
+        }
+        if(nodo->frente!=nullptr){
+            if(solve(nodo->frente)){
+                sol.push(nodo);
+                return true;
+            }
+        }
+        if(nodo->der!=nullptr){
+            if(solve(nodo->der)){
+                sol.push(nodo);
+                return true;
+            }
+        }
+        return false;
+    }
 }

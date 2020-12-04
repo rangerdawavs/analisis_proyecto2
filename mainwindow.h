@@ -16,6 +16,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_checkBox_stateChanged(int arg1);
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

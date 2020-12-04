@@ -21,8 +21,10 @@ public:
     laberinto* lab;
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
+    bool sol;
 
 public slots:
+    void setSol(bool _set);
     void setLab(laberinto* _lab);
     void setShape(Shape shape);
     void setPen(const QPen &pen);
