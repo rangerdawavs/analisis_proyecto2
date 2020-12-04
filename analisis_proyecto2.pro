@@ -10,10 +10,12 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    nodoarbol.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    nodoarbol.h
 
 FORMS += \
     mainwindow.ui
