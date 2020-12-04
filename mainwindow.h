@@ -1,7 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <QXmlStreamWriter>
 #include <QMainWindow>
+#include <QFile>
 #include "renderarea.h"
 
 QT_BEGIN_NAMESPACE
