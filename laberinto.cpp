@@ -14,8 +14,10 @@ laberinto::laberinto()
             this->matriz[i][j]=0;
         }
     }
-    this->matriz[0][0]=1;
-    this->start = new nodoArbol(nullptr,nullptr,nullptr,nullptr,0,0,0);
+    int xrand=0;
+    int yrand=0;
+    this->matriz[xrand][yrand]=1;
+    this->start = new nodoArbol(nullptr,nullptr,nullptr,nullptr,xrand,yrand,0);
 }
 
 nodoArbol* laberinto::getStart(){
@@ -186,12 +188,14 @@ void laberinto::res_laberinto(nodoArbol* nodo){
 
 void laberinto::res_laberinto(){
     res_laberinto(getStart());
-    start=new nodoArbol(nullptr,nullptr,nullptr,nullptr,0,0,0);
+    int xrand=0;
+    int yrand=0;
+    start=new nodoArbol(nullptr,nullptr,nullptr,nullptr,xrand,yrand,0);
     matriz[0][0]=1;
 }
 
 bool laberinto::solve(nodoArbol* nodo){
-    if(nodo->corX==19 && nodo->corY==19){
+    if(nodo->corX==width-1 && nodo->corY==height-1){
         sol.push(nodo);
         return true;
     }
